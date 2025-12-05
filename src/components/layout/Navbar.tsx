@@ -14,6 +14,7 @@ export function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout>();
+  const closeTimeoutRef = useRef<NodeJS.Timeout>();
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -27,30 +28,47 @@ export function Navbar() {
   const handleMouseEnter = (label: string, hasDropdown?: boolean) => {
     if (!hasDropdown) return;
     
+    // Clear any pending close timeout
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    
+    // Very short delay before opening (50-100ms like Squarespace)
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
-    setActiveDropdown(label);
+    
+    hoverTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(label);
+    }, 50);
   };
 
   const handleMouseLeave = () => {
-    hoverTimeoutRef.current = setTimeout(() => {
+    // Clear opening timeout if mouse leaves before dropdown opens
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Delay before closing (100-200ms like Squarespace)
+    closeTimeoutRef.current = setTimeout(() => {
       if (!isHoveringDropdown) {
         setActiveDropdown(null);
       }
-    }, 100);
+    }, 150);
   };
 
   const handleDropdownMouseEnter = () => {
     setIsHoveringDropdown(true);
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
     }
   };
 
   const handleDropdownMouseLeave = () => {
     setIsHoveringDropdown(false);
-    setActiveDropdown(null);
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
   };
 
   useEffect(() => {
@@ -63,6 +81,14 @@ export function Navbar() {
       return () => document.removeEventListener('click', handleClick);
     }
   }, [activeDropdown]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <>
