@@ -32,15 +32,24 @@ export default function Home() {
 
           <FadeInUp delay={0.6}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
+              <motion.a
                 href="https://www.fresha.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group px-8 py-4 rounded-lg bg-gradient-to-r from-verde-pastel to-dorado text-black font-semibold hover:shadow-xl transition-all inline-flex items-center space-x-2"
+                className="group relative px-8 py-4 rounded-lg bg-gradient-to-r from-verde-pastel to-dorado text-black font-semibold hover:shadow-xl transition-shadow duration-400 inline-flex items-center space-x-2 overflow-hidden"
+                whileHover="hover"
               >
-                <span>Reservar Cita</span>
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-verde-pastel/50 to-dorado/50 origin-left"
+                  initial={{ scaleX: 0 }}
+                  variants={{
+                    hover: { scaleX: 1 }
+                  }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                />
+                <span className="relative z-10">Reservar Cita</span>
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
+              </motion.a>
               <Link
                 href="/servicios"
                 className="px-8 py-4 rounded-lg border-2 border-border hover:border-verde-pastel font-semibold transition-all inline-flex items-center space-x-2"

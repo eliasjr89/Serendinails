@@ -25,7 +25,7 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
           }}
           exit={{ opacity: 0, visibility: 'hidden' }}
           transition={{ 
-            opacity: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] },
+            opacity: { duration: 0.5, ease: [0.165, 0.84, 0.44, 1] },
             visibility: { duration: 0.3, ease: 'linear' }
           }}
           className="fixed left-1/2 -translate-x-1/2 top-24 z-40"
@@ -38,7 +38,7 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
               x: arrowPosition
             }}
             transition={{ 
-              duration: 0.6, 
+              duration: 0.5, 
               ease: [0.165, 0.84, 0.44, 1] 
             }}
             className="absolute -top-[10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black z-10"
@@ -47,7 +47,7 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
           <motion.div 
             layout
             transition={{ 
-              layout: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] }
+              layout: { duration: 0.5, ease: [0.165, 0.84, 0.44, 1] }
             }}
             className="rounded-lg bg-black overflow-hidden mt-0"
             style={{
@@ -59,7 +59,7 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ 
-                opacity: { duration: 0.3, ease: 'linear' }
+                opacity: { duration: 0.4, ease: 'linear' }
               }}
               className="p-10"
             >
@@ -71,8 +71,8 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ 
-                      duration: 0.15,
-                      delay: 0.05 + (categoryIndex * 0.03),
+                      duration: 0.25,
+                      delay: 0.1 + (categoryIndex * 0.05),
                       ease: [0.4, 0, 0.2, 1]
                     }}
                     className="flex-shrink-0 min-w-[180px]"
@@ -88,8 +88,8 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ 
-                            duration: 0.12,
-                            delay: 0.08 + (categoryIndex * 0.03) + (itemIndex * 0.02),
+                            duration: 0.2,
+                            delay: 0.15 + (categoryIndex * 0.05) + (itemIndex * 0.03),
                             ease: [0.4, 0, 0.2, 1]
                           }}
                         >
@@ -97,11 +97,11 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
                             href={item.href} 
                             className="group block"
                           >
-                            <div className="text-white font-normal text-sm group-hover:text-verde-pastel transition-colors duration-150 whitespace-nowrap">
+                            <div className="text-white font-normal text-sm group-hover:text-verde-pastel transition-colors duration-250 whitespace-nowrap">
                               {item.label}
                             </div>
                             {item.description && (
-                              <div className="text-xs text-white/40 mt-0.5 group-hover:text-white/60 transition-colors duration-150 whitespace-nowrap">
+                              <div className="text-xs text-white/40 mt-0.5 group-hover:text-white/60 transition-colors duration-250 whitespace-nowrap">
                                 {item.description}
                               </div>
                             )}

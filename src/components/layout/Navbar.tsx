@@ -65,7 +65,7 @@ export function Navbar() {
       if (!isHoveringDropdown) {
         setActiveDropdown(null);
       }
-    }, 150);
+    }, 200);
   };
 
   const handleDropdownMouseEnter = () => {
@@ -79,7 +79,7 @@ export function Navbar() {
     setIsHoveringDropdown(false);
     closeTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 150);
+    }, 200);
   };
 
   const handleLinkClick = (e: React.MouseEvent, label: string, hasDropdown?: boolean) => {
@@ -120,22 +120,25 @@ export function Navbar() {
 
   const activeDropdownItems = menuItems.find(item => item.label === activeDropdown)?.dropdownItems || [];
 
+  // Navbar should darken when scrolled OR when dropdown is active
+  const shouldDarken = isScrolled || !!activeDropdown;
+
   return (
     <>
       <motion.nav
         initial={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
         animate={{
-          backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0)',
-          backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)',
+          backgroundColor: shouldDarken ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0)',
+          backdropFilter: shouldDarken ? 'blur(10px)' : 'blur(0px)',
         }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
         className="fixed top-0 left-0 right-0 z-50 mb-4"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo - Left with Gold Gradient */}
             <Link href="/" className="flex items-center space-x-2 group z-50">
-              <span className="font-display text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent hover:from-yellow-300 hover:via-yellow-400 hover:to-yellow-500 transition-all duration-300">
+              <span className="font-display text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent hover:from-yellow-300 hover:via-yellow-400 hover:to-yellow-500 transition-all duration-400">
                 SERENDINAILS
               </span>
             </Link>
@@ -152,13 +155,17 @@ export function Navbar() {
                 >
                   <button
                     onClick={(e) => handleLinkClick(e, item.label, item.hasDropdown)}
-                    className="text-white dark:text-white hover:text-white/80 dark:hover:text-white/80 transition-colors duration-200 font-normal text-base flex items-center gap-1 bg-transparent border-none cursor-pointer"
+                    className={`${
+                      shouldDarken 
+                        ? 'text-white' 
+                        : 'text-gray-900 dark:text-white'
+                    } hover:text-white/80 dark:hover:text-white/80 transition-colors duration-300 font-normal text-base flex items-center gap-1 bg-transparent border-none cursor-pointer`}
                   >
                     {item.label}
                     {item.hasDropdown && (
                       <motion.div
                         animate={{ y: activeDropdown === item.label ? 3 : 0 }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
                       >
                         <ChevronDown className="w-4 h-4" />
                       </motion.div>
@@ -175,9 +182,13 @@ export function Navbar() {
                 href="https://www.fresha.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative px-6 py-2.5 rounded-md border border-white dark:border-white text-white dark:text-white font-medium overflow-hidden group"
+                className={`relative px-6 py-2.5 rounded-md border ${
+                  shouldDarken 
+                    ? 'border-white text-white' 
+                    : 'border-gray-900 text-gray-900 dark:border-white dark:text-white'
+                } font-medium overflow-hidden group`}
               >
-                <span className="relative z-10 group-hover:text-black transition-colors duration-300">
+                <span className="relative z-10 group-hover:text-black transition-colors duration-400">
                   Reservar Cita
                 </span>
                 {/* Gold gradient fill from left */}
@@ -185,7 +196,7 @@ export function Navbar() {
                   className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 origin-left"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                 />
               </a>
 
@@ -197,7 +208,11 @@ export function Navbar() {
               <ThemeToggle />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-white dark:text-white hover:text-verde-pastel transition-colors p-2"
+                className={`${
+                  shouldDarken 
+                    ? 'text-white' 
+                    : 'text-gray-900 dark:text-white'
+                } hover:text-verde-pastel transition-colors p-2`}
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
@@ -227,7 +242,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
             className="fixed top-20 left-0 right-0 bg-black/95 backdrop-blur-md overflow-hidden z-40 md:hidden"
           >
             <div className="px-4 py-6 space-y-4 max-h-[calc(100vh-5rem)] overflow-y-auto">
@@ -239,7 +254,7 @@ export function Navbar() {
                         setIsMobileMenuOpen(false);
                       }
                     }}
-                    className="block text-white hover:text-verde-pastel transition-colors py-2 font-medium text-lg flex items-center gap-2 bg-transparent border-none w-full text-left"
+                    className="block text-white hover:text-verde-pastel transition-colors duration-300 py-2 font-medium text-lg flex items-center gap-2 bg-transparent border-none w-full text-left"
                   >
                     {item.label}
                     {item.hasDropdown && (
@@ -261,7 +276,7 @@ export function Navbar() {
                                 key={subItem.label}
                                 href={subItem.href}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="block text-white/80 hover:text-verde-pastel transition-colors py-1.5 text-sm"
+                                className="block text-white/80 hover:text-verde-pastel transition-colors duration-300 py-1.5 text-sm"
                               >
                                 {subItem.label}
                                 {subItem.description && (
@@ -284,7 +299,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-center px-6 py-3 rounded-md border border-white text-white font-semibold mt-6 hover:bg-gradient-to-r hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600 hover:text-black transition-all duration-300"
+                className="block w-full text-center px-6 py-3 rounded-md border border-white text-white font-semibold mt-6 hover:bg-gradient-to-r hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600 hover:text-black transition-all duration-400"
               >
                 Reservar Cita
               </a>
