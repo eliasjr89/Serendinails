@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles, GraduationCap, Star } from 'lucide-react';
 import { FadeInUp } from '@/components/animations/FadeInUp';
 import { StaggerContainer, itemVariants } from '@/components/animations/StaggerContainer';
 import { TestimonialsSlider } from '@/components/TestimonialsSlider';
+import { ScrollTriggerButton } from '@/components/animations/ScrollTriggerButton';
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -33,12 +34,11 @@ export default function Home() {
 
           <FadeInUp delay={0.6}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <motion.a
+              <ScrollTriggerButton
                 href="https://www.fresha.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative px-8 py-4 rounded-lg border-2 border-border hover:border-verde-pastel font-semibold transition-all duration-400 inline-flex items-center space-x-2 overflow-hidden"
-                whileHover="hover"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-verde-pastel to-dorado origin-left"
@@ -50,7 +50,7 @@ export default function Home() {
                 />
                 <span className="relative z-10 group-hover:text-black transition-colors duration-400">Reservar Cita</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 group-hover:text-black transition-all duration-300 relative z-10" />
-              </motion.a>
+              </ScrollTriggerButton>
               <Link
                 href="/servicios"
                 className="px-8 py-4 rounded-lg border-2 border-border hover:border-verde-pastel font-semibold transition-all inline-flex items-center space-x-2"
