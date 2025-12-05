@@ -12,9 +12,11 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ left: 0, width: 0 });
   const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout>();
   const closeTimeoutRef = useRef<NodeJS.Timeout>();
+  const linkRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -25,6 +27,17 @@ export function Navbar() {
     }
   });
 
+  const updateDropdownPosition = (label: string) => {
+    const linkElement = linkRefs.current[label];
+    if (linkElement) {
+      const rect = linkElement.getBoundingClientRect();
+      setDropdownPosition({
+        left: rect.left + rect.width / 2,
+        width: rect.width
+      });
+    }
+  };
+
   const handleMouseEnter = (label: string, hasDropdown?: boolean) => {
     if (!hasDropdown) return;
     
@@ -33,7 +46,10 @@ export function Navbar() {
       clearTimeout(closeTimeoutRef.current);
     }
     
-    // Very short delay before opening (50-100ms like Squarespace)
+    // Update position immediately
+    updateDropdownPosition(label);
+    
+    // Very short delay before opening (50ms like Squarespace)
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
@@ -49,7 +65,7 @@ export function Navbar() {
       clearTimeout(hoverTimeoutRef.current);
     }
     
-    // Delay before closing (100-200ms like Squarespace)
+    // Delay before closing (150ms like Squarespace)
     closeTimeoutRef.current = setTimeout(() => {
       if (!isHoveringDropdown) {
         setActiveDropdown(null);
@@ -82,6 +98,13 @@ export function Navbar() {
     }
   }, [activeDropdown]);
 
+  // Update position when active dropdown changes
+  useEffect(() => {
+    if (activeDropdown) {
+      updateDropdownPosition(activeDropdown);
+    }
+  }, [activeDropdown]);
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
@@ -89,6 +112,9 @@ export function Navbar() {
       if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
     };
   }, []);
+
+  // Get active dropdown items
+  const activeDropdownItems = menuItems.find(item => item.label === activeDropdown)?.dropdownItems || [];
 
   return (
     <>
@@ -118,6 +144,7 @@ export function Navbar() {
               {menuItems.map((item) => (
                 <div
                   key={item.label}
+                  ref={(el) => { linkRefs.current[item.label] = el; }}
                   className="relative"
                   onMouseEnter={() => handleMouseEnter(item.label, item.hasDropdown)}
                   onMouseLeave={handleMouseLeave}
@@ -136,15 +163,6 @@ export function Navbar() {
                       </motion.div>
                     )}
                   </Link>
-                  
-                  {item.hasDropdown && item.dropdownItems && (
-                    <MegaDropdown
-                      items={item.dropdownItems}
-                      isOpen={activeDropdown === item.label}
-                      onMouseEnter={handleDropdownMouseEnter}
-                      onMouseLeave={handleDropdownMouseLeave}
-                    />
-                  )}
                 </div>
               ))}
             </div>
@@ -190,6 +208,15 @@ export function Navbar() {
             </div>
           </div>
         </div>
+
+        {/* Shared Dropdown - Positioned absolutely */}
+        <MegaDropdown
+          items={activeDropdownItems}
+          isOpen={!!activeDropdown}
+          position={dropdownPosition}
+          onMouseEnter={handleDropdownMouseEnter}
+          onMouseLeave={handleDropdownMouseLeave}
+        />
       </motion.nav>
 
       {/* Mobile Menu */}

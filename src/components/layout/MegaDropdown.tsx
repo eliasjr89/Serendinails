@@ -7,36 +7,50 @@ import { DropdownCategory } from '@/types/navbar';
 interface MegaDropdownProps {
   items: DropdownCategory[];
   isOpen: boolean;
+  position: { left: number; width: number };
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
-export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: MegaDropdownProps) {
+export function MegaDropdown({ items, isOpen, position, onMouseEnter, onMouseLeave }: MegaDropdownProps) {
   return (
     <AnimatePresence mode="wait">
-      {isOpen && (
+      {isOpen && items.length > 0 && (
         <motion.div
-          key="dropdown"
+          key="shared-dropdown"
           initial={{ opacity: 0, visibility: 'hidden' }}
-          animate={{ opacity: 1, visibility: 'visible' }}
+          animate={{ 
+            opacity: 1, 
+            visibility: 'visible',
+            x: position.left
+          }}
           exit={{ opacity: 0, visibility: 'hidden' }}
           transition={{ 
             opacity: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] },
-            visibility: { duration: 0.3, ease: 'linear' }
+            visibility: { duration: 0.3, ease: 'linear' },
+            x: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] }
           }}
-          className="absolute left-1/2 -translate-x-1/2 top-full z-40 pt-3"
+          className="fixed top-20 z-40 pt-3"
+          style={{
+            left: 0,
+            transform: `translateX(-50%)`
+          }}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
-          {/* Arrow pointing up */}
-          <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black" />
+          {/* Arrow pointing up - positioned relative to dropdown */}
+          <div 
+            className="absolute -top-1.5 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black"
+            style={{
+              left: '50%',
+              transform: 'translateX(-50%)'
+            }}
+          />
           
           <motion.div 
-            initial={{ width: 'auto', height: 'auto' }}
-            animate={{ width: 'auto', height: 'auto' }}
+            layout
             transition={{ 
-              duration: 0.6, 
-              ease: [0.165, 0.84, 0.44, 1]
+              layout: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] }
             }}
             className="rounded-lg bg-black overflow-hidden"
             style={{
@@ -44,26 +58,27 @@ export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: Mega
             }}
           >
             <motion.div
-              initial={{ opacity: 0, visibility: 'hidden' }}
-              animate={{ opacity: 1, visibility: 'visible' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ 
-                opacity: { duration: 0.3, ease: 'linear' },
-                visibility: { duration: 0.3, ease: 'linear' }
+                opacity: { duration: 0.3, ease: 'linear' }
               }}
               className="p-10"
             >
-              <div className="flex flex-row justify-between items-start gap-8">
+              <div className="flex flex-row justify-start items-start gap-8">
                 {items.map((category, categoryIndex) => (
                   <motion.div
                     key={category.category}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
                     transition={{ 
                       duration: 0.15,
                       delay: 0.05 + (categoryIndex * 0.03),
                       ease: [0.4, 0, 0.2, 1]
                     }}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 min-w-[180px]"
                   >
                     <h3 className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-3">
                       {category.category}
@@ -74,6 +89,7 @@ export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: Mega
                           key={item.label}
                           initial={{ opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 4 }}
                           transition={{ 
                             duration: 0.12,
                             delay: 0.08 + (categoryIndex * 0.03) + (itemIndex * 0.02),
