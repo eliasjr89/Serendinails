@@ -7,37 +7,37 @@ export const menuItems: MenuItem[] = [
     hasDropdown: true,
     dropdownItems: [
       {
-        category: 'Uñas',
+        category: 'UÑAS',
         items: [
           { 
-            label: 'Manicura Clásica', 
-            href: '/servicios#manicura-clasica', 
-            description: 'Cuidado tradicional de uñas' 
+            label: 'Manicura', 
+            href: '/servicios#manicura', 
+            description: 'Cuidado profesional de manos' 
           },
           { 
-            label: 'Manicura Semipermanente', 
-            href: '/servicios#manicura-semi', 
+            label: 'Pedicura', 
+            href: '/servicios#pedicura', 
+            description: 'Tratamiento completo de pies' 
+          },
+          { 
+            label: 'Uñas Semipermanentes', 
+            href: '/servicios#semipermanente', 
             description: 'Larga duración y brillo' 
           },
           { 
-            label: 'Pedicura Spa', 
-            href: '/servicios#pedicura-spa', 
-            description: 'Relajación total para tus pies' 
-          },
-          { 
             label: 'Uñas Esculpidas', 
-            href: '/servicios#unas-esculpidas', 
+            href: '/servicios#esculpidas', 
             description: 'Extensiones profesionales' 
           },
         ]
       },
       {
-        category: 'Tratamientos Corporales',
+        category: 'TRATAMIENTOS',
         items: [
           { 
-            label: 'Masajes Relajantes', 
+            label: 'Masajes', 
             href: '/servicios#masajes', 
-            description: 'Terapias de bienestar' 
+            description: 'Relajación y bienestar' 
           },
           { 
             label: 'Depilación', 
@@ -52,7 +52,7 @@ export const menuItems: MenuItem[] = [
         ]
       },
       {
-        category: 'Especiales',
+        category: 'ESPECIALES',
         items: [
           { 
             label: 'Packs Novias', 
@@ -64,89 +64,51 @@ export const menuItems: MenuItem[] = [
             href: '/servicios#gift-cards', 
             description: 'El regalo ideal' 
           },
-          { 
-            label: 'Eventos Grupales', 
-            href: '/servicios#eventos', 
-            description: 'Celebraciones especiales' 
-          },
         ]
       }
     ]
   },
   {
-    label: 'Cursos',
-    href: '/cursos',
+    label: 'Recursos',
+    href: '/blog',
     hasDropdown: true,
     dropdownItems: [
       {
-        category: 'Nivel Básico',
+        category: 'APRENDE',
         items: [
           { 
-            label: 'Iniciación a Uñas', 
-            href: '/cursos#basico-unas', 
-            description: 'Fundamentos esenciales' 
+            label: 'Blog', 
+            href: '/blog', 
+            description: 'Consejos y tendencias' 
           },
           { 
-            label: 'Manicura Profesional', 
-            href: '/cursos#manicura-pro', 
-            description: 'Técnicas avanzadas' 
+            label: 'Cursos', 
+            href: '/cursos', 
+            description: 'Formación profesional' 
           },
           { 
-            label: 'Pedicura Básica', 
-            href: '/cursos#pedicura-basica', 
-            description: 'Cuidado de pies' 
+            label: 'Tutoriales', 
+            href: '/blog#tutoriales', 
+            description: 'Guías paso a paso' 
           },
         ]
       },
       {
-        category: 'Nivel Avanzado',
+        category: 'GALERÍA',
         items: [
           { 
-            label: 'Nail Art', 
-            href: '/cursos#nail-art', 
-            description: 'Diseños creativos' 
+            label: 'Trabajos Realizados', 
+            href: '/galeria', 
+            description: 'Nuestro portfolio' 
           },
           { 
-            label: 'Extensiones de Uñas', 
-            href: '/cursos#extensiones', 
-            description: 'Técnicas de alargamiento' 
-          },
-          { 
-            label: 'Uñas Acrílicas', 
-            href: '/cursos#acrilicas', 
-            description: 'Esculpido profesional' 
-          },
-        ]
-      },
-      {
-        category: 'Información',
-        items: [
-          { 
-            label: 'Calendario de Cursos', 
-            href: '/cursos#calendario', 
-            description: 'Próximas fechas' 
-          },
-          { 
-            label: 'Certificación', 
-            href: '/cursos#certificacion', 
-            description: 'Títulos oficiales' 
-          },
-          { 
-            label: 'Preguntas Frecuentes', 
-            href: '/cursos#faq', 
-            description: 'Resuelve tus dudas' 
+            label: 'Antes y Después', 
+            href: '/galeria#antes-despues', 
+            description: 'Transformaciones' 
           },
         ]
       }
     ]
-  },
-  {
-    label: 'Blog',
-    href: '/blog'
-  },
-  {
-    label: 'Galería',
-    href: '/galeria'
   },
   {
     label: 'Contacto',
