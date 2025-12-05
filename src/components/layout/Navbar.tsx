@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, useMotionValueEvent, useScroll, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronUp } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { MegaDropdown } from './MegaDropdown';
 import { menuItems } from '@/data/menuItems';
@@ -167,7 +167,7 @@ export function Navbar() {
                         animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                         transition={{ duration: 0.3, ease: 'easeOut' }}
                       >
-                        <ChevronDown className="w-4 h-4" />
+                        <ChevronUp className="w-4 h-4" />
                       </motion.div>
                     )}
                   </button>
