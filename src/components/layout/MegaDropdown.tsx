@@ -7,7 +7,7 @@ import { DropdownCategory } from '@/types/navbar';
 interface MegaDropdownProps {
   items: DropdownCategory[];
   isOpen: boolean;
-  arrowPosition: number; // Position of arrow in pixels from left
+  arrowPosition: number;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
@@ -28,7 +28,7 @@ export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMou
             opacity: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] },
             visibility: { duration: 0.3, ease: 'linear' }
           }}
-          className="fixed left-1/2 -translate-x-1/2 top-20 z-40"
+          className="fixed left-1/2 -translate-x-1/2 top-24 z-40"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >

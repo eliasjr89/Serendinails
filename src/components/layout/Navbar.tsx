@@ -33,7 +33,6 @@ export function Navbar() {
       const rect = linkElement.getBoundingClientRect();
       const screenCenter = window.innerWidth / 2;
       const linkCenter = rect.left + rect.width / 2;
-      // Calculate offset from center of screen
       const offset = linkCenter - screenCenter;
       setArrowPosition(offset);
     }
@@ -42,15 +41,12 @@ export function Navbar() {
   const handleMouseEnter = (label: string, hasDropdown?: boolean) => {
     if (!hasDropdown) return;
     
-    // Clear any pending close timeout
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
     }
     
-    // Update arrow position immediately
     updateArrowPosition(label);
     
-    // Very short delay before opening (50ms like Squarespace)
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
@@ -61,12 +57,10 @@ export function Navbar() {
   };
 
   const handleMouseLeave = () => {
-    // Clear opening timeout if mouse leaves before dropdown opens
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
     
-    // Delay before closing (150ms like Squarespace)
     closeTimeoutRef.current = setTimeout(() => {
       if (!isHoveringDropdown) {
         setActiveDropdown(null);
@@ -88,6 +82,18 @@ export function Navbar() {
     }, 150);
   };
 
+  const handleLinkClick = (e: React.MouseEvent, label: string, hasDropdown?: boolean) => {
+    if (hasDropdown) {
+      e.preventDefault();
+      if (activeDropdown === label) {
+        setActiveDropdown(null);
+      } else {
+        updateArrowPosition(label);
+        setActiveDropdown(label);
+      }
+    }
+  };
+
   useEffect(() => {
     const handleClick = () => {
       setActiveDropdown(null);
@@ -99,14 +105,12 @@ export function Navbar() {
     }
   }, [activeDropdown]);
 
-  // Update arrow position when active dropdown changes
   useEffect(() => {
     if (activeDropdown) {
       updateArrowPosition(activeDropdown);
     }
   }, [activeDropdown]);
 
-  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -114,7 +118,6 @@ export function Navbar() {
     };
   }, []);
 
-  // Get active dropdown items
   const activeDropdownItems = menuItems.find(item => item.label === activeDropdown)?.dropdownItems || [];
 
   return (
@@ -126,17 +129,14 @@ export function Navbar() {
           backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)',
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="fixed top-0 left-0 right-0 z-50 border-b"
-        style={{
-          borderBottomColor: isScrolled ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)'
-        }}
+        className="fixed top-0 left-0 right-0 z-50 mb-4"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo - Left */}
+            {/* Logo - Left with Gold Gradient */}
             <Link href="/" className="flex items-center space-x-2 group z-50">
-              <span className="font-display text-2xl font-bold text-white group-hover:text-verde-pastel transition-colors duration-200">
-                Serendinails
+              <span className="font-display text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent hover:from-yellow-300 hover:via-yellow-400 hover:to-yellow-500 transition-all duration-300">
+                SERENDINAILS
               </span>
             </Link>
 
@@ -150,39 +150,39 @@ export function Navbar() {
                   onMouseEnter={() => handleMouseEnter(item.label, item.hasDropdown)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <Link
-                    href={item.href}
-                    className="text-white hover:text-white/80 transition-colors duration-200 font-normal text-base flex items-center gap-1"
+                  <button
+                    onClick={(e) => handleLinkClick(e, item.label, item.hasDropdown)}
+                    className="text-white dark:text-white hover:text-white/80 dark:hover:text-white/80 transition-colors duration-200 font-normal text-base flex items-center gap-1 bg-transparent border-none cursor-pointer"
                   >
                     {item.label}
                     {item.hasDropdown && (
                       <motion.div
-                        animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
+                        animate={{ y: activeDropdown === item.label ? 3 : 0 }}
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                       >
                         <ChevronDown className="w-4 h-4" />
                       </motion.div>
                     )}
-                  </Link>
+                  </button>
                 </div>
               ))}
             </div>
 
             {/* Right Side - CTA and Theme Toggle */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* CTA Button with Progress Bar Fill Effect */}
+              {/* CTA Button with Gold Hover */}
               <a
                 href="https://www.fresha.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative px-6 py-2.5 rounded-md border border-white text-white font-medium overflow-hidden group"
+                className="relative px-6 py-2.5 rounded-md border border-white dark:border-white text-white dark:text-white font-medium overflow-hidden group"
               >
                 <span className="relative z-10 group-hover:text-black transition-colors duration-300">
                   Reservar Cita
                 </span>
-                {/* Progress bar fill from left */}
+                {/* Gold gradient fill from left */}
                 <motion.div
-                  className="absolute inset-0 bg-white origin-left"
+                  className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 origin-left"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
@@ -197,7 +197,7 @@ export function Navbar() {
               <ThemeToggle />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-white hover:text-verde-pastel transition-colors p-2"
+                className="text-white dark:text-white hover:text-verde-pastel transition-colors p-2"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
@@ -233,16 +233,19 @@ export function Navbar() {
             <div className="px-4 py-6 space-y-4 max-h-[calc(100vh-5rem)] overflow-y-auto">
               {menuItems.map((item) => (
                 <div key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
-                    className="block text-white hover:text-verde-pastel transition-colors py-2 font-medium text-lg flex items-center gap-2"
+                  <button
+                    onClick={(e) => {
+                      if (!item.hasDropdown) {
+                        setIsMobileMenuOpen(false);
+                      }
+                    }}
+                    className="block text-white hover:text-verde-pastel transition-colors py-2 font-medium text-lg flex items-center gap-2 bg-transparent border-none w-full text-left"
                   >
                     {item.label}
                     {item.hasDropdown && (
                       <ChevronDown className="w-4 h-4" />
                     )}
-                  </Link>
+                  </button>
                   
                   {/* Mobile Dropdown Items */}
                   {item.hasDropdown && item.dropdownItems && (
@@ -281,7 +284,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-center px-6 py-3 rounded-md border border-white text-white font-semibold mt-6 hover:bg-white hover:text-black transition-colors duration-300"
+                className="block w-full text-center px-6 py-3 rounded-md border border-white text-white font-semibold mt-6 hover:bg-gradient-to-r hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600 hover:text-black transition-all duration-300"
               >
                 Reservar Cita
               </a>
