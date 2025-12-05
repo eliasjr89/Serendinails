@@ -12,7 +12,7 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [dropdownPosition, setDropdownPosition] = useState({ left: 0, width: 0 });
+  const [arrowPosition, setArrowPosition] = useState(0);
   const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout>();
   const closeTimeoutRef = useRef<NodeJS.Timeout>();
@@ -27,14 +27,15 @@ export function Navbar() {
     }
   });
 
-  const updateDropdownPosition = (label: string) => {
+  const updateArrowPosition = (label: string) => {
     const linkElement = linkRefs.current[label];
     if (linkElement) {
       const rect = linkElement.getBoundingClientRect();
-      setDropdownPosition({
-        left: rect.left + rect.width / 2,
-        width: rect.width
-      });
+      const screenCenter = window.innerWidth / 2;
+      const linkCenter = rect.left + rect.width / 2;
+      // Calculate offset from center of screen
+      const offset = linkCenter - screenCenter;
+      setArrowPosition(offset);
     }
   };
 
@@ -46,8 +47,8 @@ export function Navbar() {
       clearTimeout(closeTimeoutRef.current);
     }
     
-    // Update position immediately
-    updateDropdownPosition(label);
+    // Update arrow position immediately
+    updateArrowPosition(label);
     
     // Very short delay before opening (50ms like Squarespace)
     if (hoverTimeoutRef.current) {
@@ -98,10 +99,10 @@ export function Navbar() {
     }
   }, [activeDropdown]);
 
-  // Update position when active dropdown changes
+  // Update arrow position when active dropdown changes
   useEffect(() => {
     if (activeDropdown) {
-      updateDropdownPosition(activeDropdown);
+      updateArrowPosition(activeDropdown);
     }
   }, [activeDropdown]);
 
@@ -209,11 +210,11 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Shared Dropdown - Positioned absolutely */}
+        {/* Shared Dropdown - Centered with moving arrow */}
         <MegaDropdown
           items={activeDropdownItems}
           isOpen={!!activeDropdown}
-          position={dropdownPosition}
+          arrowPosition={arrowPosition}
           onMouseEnter={handleDropdownMouseEnter}
           onMouseLeave={handleDropdownMouseLeave}
         />

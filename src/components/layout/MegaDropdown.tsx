@@ -7,12 +7,12 @@ import { DropdownCategory } from '@/types/navbar';
 interface MegaDropdownProps {
   items: DropdownCategory[];
   isOpen: boolean;
-  position: { left: number; width: number };
+  arrowPosition: number; // Position of arrow in pixels from left
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
-export function MegaDropdown({ items, isOpen, position, onMouseEnter, onMouseLeave }: MegaDropdownProps) {
+export function MegaDropdown({ items, isOpen, arrowPosition, onMouseEnter, onMouseLeave }: MegaDropdownProps) {
   return (
     <AnimatePresence mode="wait">
       {isOpen && items.length > 0 && (
@@ -21,30 +21,27 @@ export function MegaDropdown({ items, isOpen, position, onMouseEnter, onMouseLea
           initial={{ opacity: 0, visibility: 'hidden' }}
           animate={{ 
             opacity: 1, 
-            visibility: 'visible',
-            x: position.left
+            visibility: 'visible'
           }}
           exit={{ opacity: 0, visibility: 'hidden' }}
           transition={{ 
             opacity: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] },
-            visibility: { duration: 0.3, ease: 'linear' },
-            x: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] }
+            visibility: { duration: 0.3, ease: 'linear' }
           }}
-          className="fixed top-20 z-40 pt-3"
-          style={{
-            left: 0,
-            transform: `translateX(-50%)`
-          }}
+          className="fixed left-1/2 -translate-x-1/2 top-20 z-40"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
-          {/* Arrow pointing up - positioned relative to dropdown */}
-          <div 
-            className="absolute -top-1.5 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black"
-            style={{
-              left: '50%',
-              transform: 'translateX(-50%)'
+          {/* Arrow pointing up - moves to point at active link */}
+          <motion.div 
+            animate={{ 
+              x: arrowPosition
             }}
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.165, 0.84, 0.44, 1] 
+            }}
+            className="absolute -top-[10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black z-10"
           />
           
           <motion.div 
@@ -52,7 +49,7 @@ export function MegaDropdown({ items, isOpen, position, onMouseEnter, onMouseLea
             transition={{ 
               layout: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] }
             }}
-            className="rounded-lg bg-black overflow-hidden"
+            className="rounded-lg bg-black overflow-hidden mt-0"
             style={{
               boxShadow: '0 134px 80px 0 rgba(0, 0, 0, 0.05), 0 60px 60px 0 rgba(0, 0, 0, 0.09), 0 15px 33px 0 rgba(0, 0, 0, 0.1)'
             }}
