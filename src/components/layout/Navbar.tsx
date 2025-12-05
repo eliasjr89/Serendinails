@@ -218,7 +218,10 @@ export function Navbar() {
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <line x1="4" y1="8" x2="20" y2="8" />
+                    <line x1="4" y1="16" x2="20" y2="16" />
+                  </svg>
                 )}
               </button>
             </div>
@@ -245,64 +248,70 @@ export function Navbar() {
             transition={{ duration: 0.4, ease: 'easeInOut' }}
             className="fixed top-20 left-0 right-0 bg-black/95 backdrop-blur-md overflow-hidden z-40 md:hidden"
           >
-            <div className="px-4 py-6 space-y-4 max-h-[calc(100vh-5rem)] overflow-y-auto">
-              {menuItems.map((item) => (
-                <div key={item.label}>
-                  <button
-                    onClick={(e) => {
-                      if (!item.hasDropdown) {
-                        setIsMobileMenuOpen(false);
-                      }
-                    }}
-                    className="block text-white hover:text-verde-pastel transition-colors duration-300 py-2 font-medium text-lg flex items-center gap-2 bg-transparent border-none w-full text-left"
-                  >
-                    {item.label}
-                    {item.hasDropdown && (
-                      <ChevronUp className="w-4 h-4" />
-                    )}
-                  </button>
-                  
-                  {/* Mobile Dropdown Items */}
-                  {item.hasDropdown && item.dropdownItems && (
-                    <div className="ml-4 mt-3 space-y-4 pb-4 border-l-2 border-white/10 pl-4">
-                      {item.dropdownItems.map((category) => (
-                        <div key={category.category}>
-                          <p className="text-xs text-white/50 uppercase tracking-wider mb-2 font-semibold">
-                            {category.category}
-                          </p>
-                          <div className="space-y-2">
-                            {category.items.map((subItem) => (
-                              <Link
-                                key={subItem.label}
-                                href={subItem.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="block text-white/80 hover:text-verde-pastel transition-colors duration-300 py-1.5 text-sm"
-                              >
-                                {subItem.label}
-                                {subItem.description && (
-                                  <span className="block text-xs text-white/40 mt-0.5">
-                                    {subItem.description}
-                                  </span>
-                                )}
-                              </Link>
-                            ))}
+            <div className="px-6 py-8 space-y-6 max-h-[calc(100vh-5rem)] overflow-y-auto">
+              {/* Navigation Links */}
+              <nav className="space-y-2">
+                {menuItems.map((item) => (
+                  <div key={item.label} className="border-b border-white/10 last:border-0 pb-4 last:pb-0">
+                    <button
+                      onClick={(e) => {
+                        if (!item.hasDropdown) {
+                          setIsMobileMenuOpen(false);
+                        }
+                      }}
+                      className="w-full text-left text-white hover:text-verde-pastel transition-colors duration-300 py-3 font-semibold text-lg flex items-center justify-between bg-transparent border-none"
+                    >
+                      <span>{item.label}</span>
+                      {item.hasDropdown && (
+                        <ChevronUp className="w-5 h-5" />
+                      )}
+                    </button>
+                    
+                    {/* Mobile Dropdown Items */}
+                    {item.hasDropdown && item.dropdownItems && (
+                      <div className="mt-4 space-y-5 pl-4">
+                        {item.dropdownItems.map((category) => (
+                          <div key={category.category}>
+                            <p className="text-xs text-white/50 uppercase tracking-wider mb-3 font-semibold">
+                              {category.category}
+                            </p>
+                            <div className="space-y-3">
+                              {category.items.map((subItem) => (
+                                <Link
+                                  key={subItem.label}
+                                  href={subItem.href}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="block text-white/80 hover:text-verde-pastel transition-colors duration-300 py-2"
+                                >
+                                  <div className="font-medium">{subItem.label}</div>
+                                  {subItem.description && (
+                                    <div className="text-xs text-white/40 mt-1">
+                                      {subItem.description}
+                                    </div>
+                                  )}
+                                </Link>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </nav>
               
-              <a
-                href="https://www.fresha.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-center px-6 py-3 rounded-md border border-white text-white font-semibold mt-6 hover:bg-gradient-to-r hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600 hover:text-black transition-all duration-400"
-              >
-                Reservar Cita
-              </a>
+              {/* CTA Button */}
+              <div className="pt-4">
+                <a
+                  href="https://www.fresha.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-center px-6 py-4 rounded-lg bg-gradient-to-r from-verde-pastel to-dorado text-black font-bold hover:shadow-xl transition-all duration-400"
+                >
+                  Reservar Cita
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

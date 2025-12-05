@@ -25,6 +25,19 @@ export const metadata: Metadata = {
   description: "Centro especializado en uñas y tratamientos corporales. Formaciones y cursos profesionales en manicura, pedicura y belleza.",
   keywords: ["uñas", "manicura", "pedicura", "tratamientos corporales", "cursos de uñas", "formación belleza"],
   authors: [{ name: "Serendinails" }],
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Serendinails"
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover"
+  },
   openGraph: {
     type: "website",
     locale: "es_ES",

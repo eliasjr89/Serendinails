@@ -22,7 +22,7 @@ export function ThemeToggle() {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="relative w-9 h-9 rounded-lg bg-secondary flex items-center justify-center hover:bg-accent transition-colors"
+      className="relative w-9 h-9 flex items-center justify-center transition-colors"
       aria-label="Toggle theme"
     >
       <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

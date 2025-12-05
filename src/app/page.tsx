@@ -185,13 +185,23 @@ export default function Home() {
                     <span>Grupos reducidos</span>
                   </li>
                 </ul>
-                <Link
-                  href="/cursos"
-                  className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg bg-gradient-to-r from-verde-pastel to-dorado text-black font-semibold hover:shadow-lg transition-shadow"
-                >
-                  <span>Ver Cursos</span>
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
+                <motion.div whileHover="hover" className="inline-block">
+                  <Link
+                    href="/cursos"
+                    className="group relative inline-flex items-center space-x-2 px-6 py-3 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border-2 border-border hover:border-verde-pastel font-semibold transition-all duration-400 overflow-hidden"
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-verde-pastel to-dorado origin-left"
+                      initial={{ scaleX: 0 }}
+                      variants={{
+                        hover: { scaleX: 1 }
+                      }}
+                      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                    />
+                    <span className="relative z-10 group-hover:text-black transition-colors duration-400">Ver Cursos</span>
+                    <ArrowRight className="h-5 w-5 relative z-10 group-hover:text-black transition-colors duration-400" />
+                  </Link>
+                </motion.div>
               </div>
             </FadeInUp>
 
