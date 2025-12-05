@@ -164,7 +164,7 @@ export function Navbar() {
                     {item.label}
                     {item.hasDropdown && (
                       <motion.div
-                        animate={{ y: activeDropdown === item.label ? 3 : 0 }}
+                        animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                         transition={{ duration: 0.3, ease: 'easeOut' }}
                       >
                         <ChevronDown className="w-4 h-4" />
