@@ -121,13 +121,23 @@ export default function Home() {
           </StaggerContainer>
 
           <FadeInUp delay={0.3} className="text-center mt-12">
-            <Link
-              href="/servicios"
-              className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg border-2 border-verde-pastel text-verde-pastel font-semibold hover:bg-verde-pastel hover:text-black transition-all"
-            >
-              <span>Ver Todos los Servicios</span>
-              <ArrowRight className="h-5 w-5" />
-            </Link>
+            <motion.div whileHover="hover" className="inline-block">
+              <Link
+                href="/servicios"
+                className="group relative inline-flex items-center space-x-2 px-6 py-3 rounded-lg border-2 border-verde-pastel text-verde-pastel font-semibold transition-all duration-400 overflow-hidden"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-verde-pastel origin-left"
+                  initial={{ scaleX: 0 }}
+                  variants={{
+                    hover: { scaleX: 1 }
+                  }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                />
+                <span className="relative z-10 group-hover:text-black transition-colors duration-400">Ver Todos los Servicios</span>
+                <ArrowRight className="h-5 w-5 relative z-10 group-hover:text-black transition-colors duration-400" />
+              </Link>
+            </motion.div>
           </FadeInUp>
         </div>
       </section>
