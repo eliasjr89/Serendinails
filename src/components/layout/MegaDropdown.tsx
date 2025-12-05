@@ -17,28 +17,42 @@ export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: Mega
       {isOpen && (
         <motion.div
           key="dropdown"
-          initial={{ opacity: 0, y: -5 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -5 }}
+          initial={{ opacity: 0, visibility: 'hidden' }}
+          animate={{ opacity: 1, visibility: 'visible' }}
+          exit={{ opacity: 0, visibility: 'hidden' }}
           transition={{ 
-            duration: 0.15,
-            ease: [0.4, 0, 0.2, 1]
+            opacity: { duration: 0.6, ease: [0.165, 0.84, 0.44, 1] },
+            visibility: { duration: 0.3, ease: 'linear' }
           }}
-          className="absolute left-1/2 -translate-x-1/2 top-full z-40 w-[700px] pt-3"
+          className="absolute left-1/2 -translate-x-1/2 top-full z-40 pt-3"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
           {/* Arrow pointing up */}
-          <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black/90" />
+          <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black" />
           
           <motion.div 
-            className="bg-black/90 backdrop-blur-md border border-white/10 rounded-lg shadow-2xl overflow-hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.1, delay: 0.05 }}
+            initial={{ width: 'auto', height: 'auto' }}
+            animate={{ width: 'auto', height: 'auto' }}
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.165, 0.84, 0.44, 1]
+            }}
+            className="rounded-lg bg-black overflow-hidden"
+            style={{
+              boxShadow: '0 134px 80px 0 rgba(0, 0, 0, 0.05), 0 60px 60px 0 rgba(0, 0, 0, 0.09), 0 15px 33px 0 rgba(0, 0, 0, 0.1)'
+            }}
           >
-            <div className="px-8 py-6">
-              <div className="grid grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, visibility: 'hidden' }}
+              animate={{ opacity: 1, visibility: 'visible' }}
+              transition={{ 
+                opacity: { duration: 0.3, ease: 'linear' },
+                visibility: { duration: 0.3, ease: 'linear' }
+              }}
+              className="p-10"
+            >
+              <div className="flex flex-row justify-between items-start gap-8">
                 {items.map((category, categoryIndex) => (
                   <motion.div
                     key={category.category}
@@ -49,6 +63,7 @@ export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: Mega
                       delay: 0.05 + (categoryIndex * 0.03),
                       ease: [0.4, 0, 0.2, 1]
                     }}
+                    className="flex-shrink-0"
                   >
                     <h3 className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-3">
                       {category.category}
@@ -69,11 +84,11 @@ export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: Mega
                             href={item.href} 
                             className="group block"
                           >
-                            <div className="text-white font-normal text-sm group-hover:text-verde-pastel transition-colors duration-150">
+                            <div className="text-white font-normal text-sm group-hover:text-verde-pastel transition-colors duration-150 whitespace-nowrap">
                               {item.label}
                             </div>
                             {item.description && (
-                              <div className="text-xs text-white/40 mt-0.5 group-hover:text-white/60 transition-colors duration-150">
+                              <div className="text-xs text-white/40 mt-0.5 group-hover:text-white/60 transition-colors duration-150 whitespace-nowrap">
                                 {item.description}
                               </div>
                             )}
@@ -84,7 +99,7 @@ export function MegaDropdown({ items, isOpen, onMouseEnter, onMouseLeave }: Mega
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       )}
