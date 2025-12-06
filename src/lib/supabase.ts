@@ -34,6 +34,7 @@ export interface Course {
   price: number | null;
   duration_hours?: number | null;
   duration?: string | null; // DB uses duration string
+  image_url?: string | null; // DB uses image_url
   pdf_url: string | null;
   flyer_url: string | null;
   level: "beginner" | "intermediate" | "advanced" | string | null;
