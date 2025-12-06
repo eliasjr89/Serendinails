@@ -2,6 +2,14 @@
 -- Run this in your Supabase SQL Editor after uploading images
 
 -- ============================================
+-- SCHEMA UPDATES (Ensure slugs exist)
+-- ============================================
+
+ALTER TABLE services ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE;
+ALTER TABLE courses ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE;
+
+-- ============================================
 -- SERVICES
 -- ============================================
 
