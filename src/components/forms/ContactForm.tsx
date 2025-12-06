@@ -1,36 +1,58 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Send } from 'lucide-react';
+import { useState } from "react";
+import { Send } from "lucide-react";
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Error al enviar el mensaje");
+      }
+
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      setTimeout(() => setSubmitStatus("idle"), 5000);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 5000);
+    } finally {
       setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '' });
-      
-      setTimeout(() => setSubmitStatus('idle'), 3000);
-    }, 1000);
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -99,13 +121,13 @@ export function ContactForm() {
         />
       </div>
 
-      {submitStatus === 'success' && (
+      {submitStatus === "success" && (
         <div className="p-4 rounded-lg bg-verde-pastel/20 text-verde-pastel text-sm">
           ¡Mensaje enviado correctamente! Te contactaremos pronto.
         </div>
       )}
 
-      {submitStatus === 'error' && (
+      {submitStatus === "error" && (
         <div className="p-4 rounded-lg bg-destructive/20 text-destructive text-sm">
           Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.
         </div>
@@ -114,9 +136,8 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full px-6 py-4 rounded-lg bg-gradient-to-r from-verde-pastel to-dorado text-black font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center space-x-2"
-      >
-        <span>{isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}</span>
+        className="w-full px-6 py-4 rounded-lg bg-gradient-to-r from-verde-pastel to-dorado text-black font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center space-x-2">
+        <span>{isSubmitting ? "Enviando..." : "Enviar Mensaje"}</span>
         <Send className="h-5 w-5" />
       </button>
     </form>
