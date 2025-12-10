@@ -80,6 +80,6 @@ _Fotos de trabajos realizados._
 
 ## 5. Datos Faltantes (Verificar)
 
-- [ ] ¿Hay algún otro teléfono además del +34 623 06 86 10?
+- [ ] ¿Hay algún otro teléfono además del +34 612534789?
 - [ ] ¿El horario de Sábado es correcto (09-14h)?
 - [ ] ¿Tienes política de cancelación específica?

@@ -157,7 +157,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
                 <div className="space-y-3">
                   <a
-                    href={`https://wa.me/34623068610?text=Hola, quiero inscribirme en el curso: ${course.title}`}
+                    href={`https://wa.me/34612534789?text=Hola, quiero inscribirme en el curso: ${course.title}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center px-4 py-3 rounded-lg bg-dorado hover:bg-dorado/90 text-black font-semibold transition-all hover:shadow-lg">
@@ -166,7 +166,7 @@ export default async function CourseDetailPage({ params }: Props) {
                   </a>
 
                   <a
-                    href={`https://wa.me/34623068610?text=Hola, necesito más información sobre el curso: ${course.title}`}
+                    href={`https://wa.me/34612534789?text=Hola, necesito más información sobre el curso: ${course.title}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center px-4 py-3 rounded-lg border border-border hover:bg-accent hover:text-accent-foreground transition-all">

@@ -68,15 +68,15 @@ export function Footer() {
                 <Link
                   href="/contacto#mapa"
                   className="hover:text-foreground transition-colors">
-                  Calle Sapporo 22, 28923 Alcorcón, Madrid
+                  Paseo Castellana 22, 28046 Madrid
                 </Link>
               </li>
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Phone className="h-4 w-4 text-verde-pastel" />
                 <a
-                  href="tel:+34623068610"
+                  href="tel:+34612534789"
                   className="hover:text-foreground transition-colors">
-                  +34 623 06 86 10
+                  +34 612 53 47 89
                 </a>
               </li>
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
@@ -90,7 +90,7 @@ export function Footer() {
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <MessageCircle className="h-4 w-4 text-verde-pastel" />
                 <a
-                  href="https://wa.me/34623068610"
+                  href="https://wa.me/34612534789"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors">

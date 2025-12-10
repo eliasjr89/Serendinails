@@ -128,7 +128,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </a>
 
                   <a
-                    href={`https://wa.me/34623068610?text=Hola, quiero información sobre el servicio: ${
+                    href={`https://wa.me/34612534789?text=Hola, quiero información sobre el servicio: ${
                       service.title || service.name
                     }`}
                     target="_blank"
